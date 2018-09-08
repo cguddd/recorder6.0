@@ -1,0 +1,24 @@
+<input type="file" name="file1_1" id="file1_1">
+<input type="button" value="上傳" onclick="uploadFile('file1_1');" />
+function uploadFile(fileType){	//檔案上傳
+	var fileObj = document.getElementById(fileType).files[0]; // js 獲取檔案物件
+	var formFile = new FormData();
+	formFile.append("file", fileObj); //加入檔案物件
+	var data = formFile;
+
+	$.ajax({
+		type : "post",
+		url : "${ctx}/record/file/upload/"   fileType,
+		data : data,
+		cache : false,
+		async : true,
+		processData : false,	//不處理髮送的資料
+		contentType : false,	//不設定請求頭
+		success : function(){
+			console.log("success");
+		},
+		error : function(){
+			console.log("err");
+		}
+	});
+}
