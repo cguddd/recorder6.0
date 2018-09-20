@@ -25,14 +25,14 @@
   </style>
 </head>
 
-<body >
+<body>
 
 
 <div style="margin-left:50%">
-<h1 id="textHead" class=" w3-button  w3-border  w3-hover-teal w3-border-blue w3-margin"><b>完整文本<i class="fa fa-angle-double-down" style="font-size:36px"></i><h5>點擊可隱藏或顯示</h5></h1>
-<div class="w3-table-all w3-hoverable w3-xlarge">
+<h1 id="textHead" class=" w3-button  w3-border  w3-hover-teal w3-border-blue w3-margin"><b>完整文本<i class="fa fa-angle-double-down" style="font-size:12px"></i><h5>點擊可隱藏或顯示</h5></h1>
+<div class="w3-table-all w3-hoverable">
   <table  class="w3-bordered-red w3-black w3-text-black " id="theTable" style="width: 100%" >
-    <tr><td>編號</td><td>台語</td><td>中文意思</td></tr>
+    <tr><td>編號</td><td>英文</td><td>中文意思</td></tr>
   </table>
 </div>
 
@@ -49,15 +49,15 @@
   <div class="w3-container  w3-large w3-teal w3-text-black content" >
   <p>感謝幫忙錄製以下台語內容</p>
   <p>可以挑會唸的錄製即可，錄完可至文本下方檢查或挑選檔案</p>
-  <p>提供音檔上傳麻煩請使用"錄1秒自動停止"</p>
+  <p>盡可能使用"錄1秒自動停止"</p>
   </div>
   <input type ="button" onclick="location.href='../'" value="回首頁"> </input>
-  <p class="w3-xlarge">您的暱稱為<b> {{ rlt }}</p>
+  <p hidden class="w3-xlarge">您的暱稱為<b> {{ rlt }}</p>
 
   <div class="w3-panel w3-border-top w3-border-bottom w3-border-green">
   <div class="w3-xlarge">正在錄製的字:</div>
   
-  <p class="w3-xxlarge" id="wordlist">一</p>
+  <p class="w3-xxlarge" id="wordlist">_silence_</p>
   </div>
  <div class="w3-show-inline-block  ">
   <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="preword(this);" id="preword">上一個詞</button>
@@ -75,7 +75,7 @@
   </div>
 
   
-  <div hidden class="w3-border w3-margin w3-large">
+  <div class="w3-border w3-margin w3-large">
   <p>您的錄音有可能的結果<br>(根據機率大到小由左至右排列) <div id="recogResult" class="w3-xlarge w3-text-green"><b>開始錄音之後會在這為您顯示有可能的辨識結果</b></div></p>
   </div>
   
@@ -89,8 +89,9 @@
 
   var audio_context;
   var recorder;
-  var words = ['一','二','三','四','五','六','七','八','九','零','後退','前進','上','下','左','右','床','去','快樂','房屋','樹','鳥','貓','狗','志明','春嬌','可以','不可','開','關'];
-  var originWords = ['一','二','三','四','五','六','七','八','九','零','退後','進前','起去','落來','倒邊','正邊','眠床','去','快樂','厝','樹','鳥','貓','狗','志明','春嬌','會使','袂使','開','關'];
+  var words = ['(無聲)','後退','床','鳥','貓','狗','下','八','五','跟隨','前進','四','去','快樂','房屋','學習','左','馬文','九','不','關','開','一','右','七','雪拉','六','停','三','樹','二','上','視覺','哇','是','零'];
+  var originWords = ['_silence_','backward','bed','bird','cat','dog','down','eight','five','follow','forward','four','go','happy','house','learn','left','marvin','nine','no','off','on','one','right','seven','sheila','six',
+'stop','three','tree','two','up','visual','wow','yes','zero'];
   var words_th = 0;
   var result="";
   window.onload=makeTable();
@@ -102,10 +103,7 @@
     for(var i=0;i<wordsLen;i++){
       originTable=document.getElementById("theTable").innerHTML;
       document.getElementById("theTable").innerHTML=originTable+"<tr><td id ='"+originWords[i]+"'>"+i+"</td><td>"+originWords[i]+"</td><td>"+words[i]+"</td></tr>";
-
-
     }
-   
   }
 
   $(document).ready(function(){
@@ -126,14 +124,9 @@
     xhr.upload.onloadend = function () {
        // alert(result);
         //alert('錄音成功');
-
     };
-
     xhr.send(blob);
     }
-  
-
-    
   //////////////DDD//////////////
       
   function __log(e, data) {
@@ -219,7 +212,7 @@
         words_th = words.length - 1;
     else
         words_th = words_th - 1;
-    this_word.innerHTML = words[words_th];
+    this_word.innerHTML = originWords[words_th];
     wordlist.appendChild(this_word);
   }
 
@@ -230,10 +223,10 @@
         words_th = 0;
     else
         words_th = words_th + 1;
-    this_word.innerHTML = words[words_th];
+    this_word.innerHTML = originWords[words_th];
     wordlist.appendChild(this_word);
   }
-      
+
 /////////////////////////////////////////////////////////////////////////////////////no next
   
   function CreateDownloadLink() {
@@ -251,7 +244,7 @@
       var theFirstChild = recordingslist.firstChild;
       var recog=document.createElement("li");
 
-      /*
+
       $.ajax({
       url: 'recogResult',
       type: 'GET',
@@ -268,7 +261,7 @@
  
       }
     });
-       */
+
 
       //name of .wav file to use during upload and download (without extendion)
       var filename = new Date().toISOString();
@@ -282,7 +275,7 @@
       hf.download = filename + '.wav';
       hf.id = 'dl';
       hf.innerHTML = hf.download;
-      word.innerHTML = "錄音內容: " + words[words_th];
+      word.innerHTML = "錄音內容: " + originWords[words_th];
       thisword.innerHTML = words[words_th];
       download.innerHTML = "下載"
       download.onclick = function(){
@@ -303,6 +296,7 @@
       li.appendChild(remove);
       div.innerHTML = "上傳成功";
       uploadAudioFromBlob_recog(blob);
+      /*
       upload.innerHTML = "上傳";
       upload.onclick = function(){
           uploadword(thisword.innerHTML);
@@ -310,6 +304,7 @@
           li.appendChild(div)
       };
       li.appendChild(upload);
+      */
 
       recordingslist.insertBefore(li,theFirstChild);
     });
