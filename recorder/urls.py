@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import  include, url
-from trips.views import recorder, model_form_upload, upload, name_post, set_name, upload_word, model_form_uploadRecog,uploadRecog,recog
+from trips.views import recorder, model_form_upload, upload, name_post, set_name, upload_word, model_form_uploadRecog,uploadRecog,recog,recognizer,main
 
 urlpatterns = {
     path('admin/', admin.site.urls),
@@ -29,4 +29,6 @@ urlpatterns = {
     path('uploadRecog', model_form_upload),
     path('uploadRecog_server', uploadRecog),
     path('recogResult', recog),
+    path('recognizer', recognizer),
+    path('',main),
 }
