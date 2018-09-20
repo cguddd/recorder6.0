@@ -29,6 +29,12 @@ rlt = ""
 word = ""
 ctx['word'] = "一"
 
+def main(request):
+    return render(request, 'main.html', {})
+
+def recognizer(request):
+    return render(request, 'recognizer.html', {})
+
 def recorder(request):
     return render(request, 'recorder.html', {})
 
