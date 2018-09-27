@@ -37,6 +37,9 @@
 </div>
 
 <h2 class=" w3-button w3-border  w3-hover-teal w3-border-blue w3-margin"><b>您錄製的內容</h2>
+    <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="download_all(this);" id="download_all">全部下載</button>
+    <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="delete_all(this);" id="delete_all">全部刪除</button>
+    <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="upload_all(this);" id="upload_all">全部上傳</button>
   <ul id="recordingslist"></ul>
 
 </div>
@@ -57,7 +60,7 @@
   <div class="w3-panel w3-border-top w3-border-bottom w3-border-green">
   <div class="w3-xlarge">正在錄製的字:</div>
   
-  <p class="w3-xxlarge" id="wordlist">一</p>
+  <p class="w3-xxlarge" id="wordlist">一(一)</p>
   </div>
  <div class="w3-show-inline-block  ">
   <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="preword(this);" id="preword">上一個詞</button>
@@ -114,6 +117,44 @@
         $("#theTable").slideToggle("fast");
     });
   });
+
+  //按鈕按照順序編號 全部下載0 全部刪除1 全部上傳2 下載3 刪除4 上傳5 下載6 ...
+  function download_all() {
+      var myNodeList = document.querySelectorAll("button");
+      var i = myNodeList.length;
+      //alert(i);
+      //myNodeList[5].click();
+      if(i>5){
+          for (i = 3; i <= myNodeList.length - 5; i=i+3) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
+              myNodeList[i].click();
+          }
+      }
+  }
+
+  function delete_all() {
+      var myNodeList = document.querySelectorAll("button");
+      var i = myNodeList.length;
+      //alert(i);
+      //myNodeList[5].click();
+      if(i>5){
+          for (i = 4; i <= myNodeList.length - 5; i=i+3) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
+              myNodeList[i].click();
+          }
+      }
+  }
+
+  function upload_all() {
+      var myNodeList = document.querySelectorAll("button");
+      var i = myNodeList.length;
+      //alert(i);
+      //myNodeList[5].click();
+      if(i>5){
+          for (i = 5; i <= myNodeList.length - 5; i=i+3) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
+              myNodeList[i].click();
+          }
+      }
+  }
+
   //////////////DDD//////////////
   function uploadAudioFromBlob_recog(blob) {
     var csrftoken = getCookie('csrftoken');
@@ -219,7 +260,7 @@
         words_th = words.length - 1;
     else
         words_th = words_th - 1;
-    this_word.innerHTML = words[words_th];
+    this_word.innerHTML = words[words_th] + "(" +originWords[words_th] + ")";
     wordlist.appendChild(this_word);
   }
 
@@ -230,7 +271,7 @@
         words_th = 0;
     else
         words_th = words_th + 1;
-    this_word.innerHTML = words[words_th];
+    this_word.innerHTML = words[words_th] + "(" +originWords[words_th] + ")";
     wordlist.appendChild(this_word);
   }
       
@@ -250,6 +291,7 @@
       var thisword = document.createElement("div");
       var theFirstChild = recordingslist.firstChild;
       var recog=document.createElement("li");
+      //var download_all=document.createElement("button");
 
       /*
       $.ajax({
@@ -284,7 +326,7 @@
       hf.innerHTML = hf.download;
       word.innerHTML = "錄音內容: " + words[words_th];
       thisword.innerHTML = words[words_th];
-      download.innerHTML = "下載"
+      download.innerHTML = "下載";
       download.onclick = function(){
           filename = thisword.innerHTML + "_{{ rlt }}";
           hf.download = filename + '.wav';
@@ -310,10 +352,18 @@
           li.appendChild(div)
       };
       li.appendChild(upload);
-
+/*
+      download_all.innerHTML = "全部下載";
+      download_all.onclick = function(){
+          download.click();
+      };
+*/
       recordingslist.insertBefore(li,theFirstChild);
+      //download_all_list.appendChild(download_all);
     });
       //nextword();//下一個字
+
+
   }
       
 /////////////////////////////////////////////////////////////////////////////////////no next
