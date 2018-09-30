@@ -1,11 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://w3schools.wang/default/resources/style/w3_try.css">
 <head>
     <meta charset="UTF-8">
     <title>twsonglah</title>
+    <style type='text/css'>
+    @import url(//fonts.googleapis.com/earlyaccess/notosanskannada.css);
+    .content{
+        font-family: 'Noto Sans Kannada', sans-serif;
+    }
+    
+    recordingslist audio {}
+    body {
+    background-color: #dddddd;
+    }
+    </style>    
 </head>
-<body>
-    <input type ="button" onclick="location.href='recorder'" value="台語錄音網頁"> </input>
-    <input type ="button" onclick="location.href='recognizer'" value="英語辨識網頁"> </input>
+<body class="w3-container">
+    <br>
+    <dir class="w3-center">
+         <i class="fa fa-home" style="font-size:300px"></i>
+    </dir>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="w3-center">
+        <button type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black w3-xxlarge" onclick="move()" >台語錄音網頁 </button>
+        <button type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black w3-xxlarge" onclick="Move()" >英語辨識網頁 </button>
+    </div>
+    
+    <br>
+    <div class="w3-progress-container w3-xlarge"> 
+        <div id="myBar" class="w3-progressbar w3-green" style="width:0%"><div id="demo" class="w3-text-white">0%</div></div> 
+    </div>
 </body>
 </html>
+
+<script> 
+function move() { 
+    var elem = document.getElementById("myBar"); 
+    var width = 0; 
+    var id = setInterval(frame, 10); 
+    function frame() { 
+        if (width >= 100) { 
+            clearInterval(id); 
+        } 
+        else { 
+            width=width+2; 
+            elem.style.width = width + '%';
+            document.getElementById("demo").innerHTML = width * 1  + '%';
+        } 
+    } 
+    setTimeout("location.href='recorder'",1000);
+}
+
+function Move() { 
+    var elem = document.getElementById("myBar"); 
+    var width = 0; 
+    var id = setInterval(frame, 10); 
+    function frame() { 
+        if (width >= 100) { 
+            clearInterval(id); 
+        } 
+        else { 
+            width=width+2; 
+            elem.style.width = width + '%'; 
+            document.getElementById("demo").innerHTML = width * 1  + '%';
+        } 
+    }
+    setTimeout("location.href='recognizer'",1000);
+}    
+</script>
