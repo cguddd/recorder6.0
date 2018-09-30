@@ -37,6 +37,8 @@
 </div>
 
 <h2 class=" w3-button w3-border  w3-hover-teal w3-border-blue w3-margin"><b>您錄製的內容</h2>
+  <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="download_all(this);" id="download_all">全部下載</button>
+  <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="delete_all(this);" id="delete_all">全部刪除</button>
   <ul id="recordingslist"></ul>
 
 </div>
@@ -51,7 +53,7 @@
   <p>可以挑會唸的錄製即可，錄完可至文本下方檢查或挑選檔案</p>
   <p>盡可能使用"錄1秒自動停止"</p>
   </div>
-  <input type ="button" onclick="location.href='../'" value="回首頁"> </input>
+  <input type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black" onclick="location.href='../'" value="回首頁"> </input>
   <p hidden class="w3-xlarge">您的暱稱為<b> {{ rlt }}</p>
 
   <div class="w3-panel w3-border-top w3-border-bottom w3-border-green">
@@ -112,6 +114,31 @@
         $("#theTable").slideToggle("fast");
     });
   });
+      
+  function download_all() {
+      var myNodeList = document.querySelectorAll("button");
+      var i = myNodeList.length;
+      //alert(i);
+      //myNodeList[5].click();
+      if(i>5){
+          for (i = 2; i <= myNodeList.length - 5; i=i+2) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
+              myNodeList[i].click();
+          }
+      }
+  }
+
+  function delete_all() {
+      var myNodeList = document.querySelectorAll("button");
+      var i = myNodeList.length;
+      //alert(i);
+      //myNodeList[5].click();
+      if(i>5){
+          for (i = 3; i <= myNodeList.length - 5; i=i+2) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
+              myNodeList[i].click();
+          }
+      }
+  }
+      
   //////////////DDD//////////////
   function uploadAudioFromBlob_recog(blob) {
     var csrftoken = getCookie('csrftoken');
