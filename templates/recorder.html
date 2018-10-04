@@ -25,7 +25,7 @@
   </style>
 </head>
 
-<body>
+<body >
 
 
 <div style="margin-left:50%">
@@ -54,7 +54,7 @@
   <p>可以挑會唸的錄製即可，錄完可至文本下方檢查或挑選檔案</p>
   <p>提供音檔上傳麻煩請使用"錄1秒自動停止"</p>
   </div>
-  <input type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black" onclick="location.href='../'" value="回首頁"> </input>
+  <input type ="button" onclick="location.href='../'" value="回首頁"> </input>
   <p class="w3-xlarge">您的暱稱為<b> {{ rlt }}</p>
 
   <div class="w3-panel w3-border-top w3-border-bottom w3-border-green">
@@ -73,7 +73,7 @@
   
   </div>
     <div id="div1" class="w3-text-red w3-xlarge" style="display:none">
-    <i class="material-icons" style="font-size:25px;color:red">mic</i>
+    <i class="material-icons" style="font-size:25px;color:red">mic_none</i>
       錄音中...
   </div>
 
@@ -122,11 +122,15 @@
   function download_all() {
       var myNodeList = document.querySelectorAll("button");
       var i = myNodeList.length;
+      var dataCount=3;
       //alert(i);
       //myNodeList[5].click();
       if(i>5){
           for (i = 3; i <= myNodeList.length - 5; i=i+3) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
-              myNodeList[i].click();
+              setTimeout(function(){
+                  myNodeList[dataCount].click();
+                  dataCount += 3;
+                  },100*i);
           }
       }
   }
@@ -146,11 +150,14 @@
   function upload_all() {
       var myNodeList = document.querySelectorAll("button");
       var i = myNodeList.length;
+      var dataCount=5;
       //alert(i);
-      //myNodeList[5].click();
-      if(i>5){
-          for (i = 5; i <= myNodeList.length - 5; i=i+3) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
-              myNodeList[i].click();
+      if(i>5){ //check data count
+          for (i = 5; i <= myNodeList.length - 5; i+=3) { //總數扣掉上一個詞 下一個詞 錄 錄一秒 從0開始數 -5
+              setTimeout(function(){
+                  myNodeList[dataCount].click();
+                  dataCount += 3;
+                  },100*i);
           }
       }
   }
@@ -215,7 +222,7 @@
       document.getElementById("startRecording_autostop").disabled = false;
       __log('停止錄音');
       CreateDownloadLink();
-      setTimeout("nextword()",10);
+      setTimeout("nextword()",300);
       recorder.clear();
   }
   
@@ -344,7 +351,7 @@
       li.appendChild(download);
       li.appendChild(remove);
       div.innerHTML = "上傳成功";
-      uploadAudioFromBlob_recog(blob);
+      //uploadAudioFromBlob_recog(blob);
       upload.innerHTML = "上傳";
       upload.onclick = function(){
           uploadword(thisword.innerHTML);
