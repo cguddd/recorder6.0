@@ -60,7 +60,7 @@ def upload_word(request):
 def upload(request):
     customHeader = request.META['HTTP_MYCUSTOMHEADER']
 
-    time = "documents/" + ctx['word']  + "/" + ctx['word']  + "_" + ctx['rlt'] + "_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S.%f")[:-3] + ".wav"
+    time = "documents/" + ctx['word'] + "_" + datetime.datetime.now().strftime("%Y%m%d_%H%M%S.%f")[:-3] + ".wav"
     # obviously handle correct naming of the file and place it somewhere like media/uploads/
     uploadedFile = open(time, "wb")
     # the actual file is in request.body
