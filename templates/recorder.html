@@ -22,6 +22,12 @@
       }
       recordingslist audio {}
   </style>
+  <style>
+      table.a {
+          table-layout: fixed;
+          width: 180px;
+      }
+  </style>
 </head>
 
 <body>
@@ -34,11 +40,21 @@
       </div>
       <button type ="button" onclick="location.href='../'">回首頁</button>
       <p class="w3-xlarge">您的暱稱為<b> {{ rlt }}</p>
+      <form id="language">
+        請選擇錄音語言<br>
+        <input type="radio" name="language" value="台語" checked="true"> 台語<br>
+        <input type="radio" name="language" value="華語"> 華語<br>
+        <input type="radio" name="language" value="英語"> 英語<br>
+      </form>
       <div class="w3-panel w3-border-top w3-border-bottom w3-border-green">
           <div class="w3-xlarge">正在錄製的字:</div>
-          <p class="w3-xxlarge" id="wordlist">一(一)</p>
+          <div class="w3-table-all w3-hoverable w3-xlarge">
+            <table class=" a w3-bordered-red w3-black w3-text-black" id="wordtable" style="width: 100%" >
+                <tr><td>編號</td><td>台語</td><td>華語</td><td>英語</td></tr>
+            </table>
+          </div>
       </div>
-      <div class="w3-show-inline-block  ">
+      <div class="w3-show-inline-block">
           <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="preword(this);" id="preword">上一個詞</button>
           <button type="button" class="w3-btn w3-black w3-round-xxlarge" onclick="nextword(this);" id="nextword">下一個詞</button>
       </div>
@@ -61,8 +77,8 @@
   <div style="margin-left:50%">
     <h1 id="textHead" class=" w3-button  w3-border  w3-hover-teal w3-border-blue w3-margin"><b>完整文本<i class="fa fa-angle-double-down" style="font-size:36px"></i><h5>點擊可隱藏或顯示</h5></h1>
     <div class="w3-table-all w3-hoverable w3-xlarge">
-        <table  class="w3-bordered-red w3-black w3-text-black " id="theTable" style="width: 100%" >
-            <tr><td>編號</td><td>台語</td><td>中文意思</td></tr>
+        <table  class="a w3-bordered-red w3-black w3-text-black " id="theTable" style="width: 100%" >
+            <tr><td>編號</td><td>台語</td><td>華語</td><td>英語</td></tr>
         </table>
     </div>
     <h2 class=" w3-button w3-border  w3-hover-teal w3-border-blue w3-margin"><b>您錄製的內容</h2>
@@ -77,21 +93,24 @@
 <script>
   var audio_context; //瀏覽器錄音器相關
   var recorder; //錄音器
-  var words = ['一','二','三','四','五','六','七','八','九','零','後退','前進','上','下','左','右','床','去','快樂','房屋','樹','鳥','貓','狗','志明','春嬌','可以','不可','開','關'];
-  var originWords = ['一','二','三','四','五','六','七','八','九','零','退後','進前','起去','落來','倒邊','正邊','眠床','去','快樂','厝','樹','鳥','貓','狗','志明','春嬌','會使','袂使','開','關'];
+  var CHTwords = ['零','一','二','三','四','五','六','七','八','九','後退','前進','上','下','左','右','床','去','快樂','房屋','樹','鳥','貓','狗','志明','春嬌','可以','不可','開','關'];
+  var TWwords = ['零','一','二','三','四','五','六','七','八','九','退後','進前','起去','落來','倒邊','正邊','眠床','去','快樂','厝','樹','鳥','貓','狗','志明','春嬌','會使','袂使','開','關'];
+  var ENwords = ['zero','one','two','three','four','five','six','seven','eight','nine','backward','forward','up','down','left','right','bed','go','happy','house','tree','bird','cat','dog','marvin','sheila','yes','no','on','off']
   var words_th = 0; //第幾個字
+  var TitleTable = document.getElementById("wordtable").innerHTML;
   //var result="";
 
   //右半邊顯示文本的內容
   window.onload=makeTable();
   function makeTable(){
-      var wordsLen=words.length;
+      var wordsLen=CHTwords.length;
       var tableString;
-      var originTable
+      var originTable;
       for(var i=0;i<wordsLen;i++) {
-          originTable=document.getElementById("theTable").innerHTML;
-          document.getElementById("theTable").innerHTML=originTable+"<tr><td id ='"+originWords[i]+"'>"+i+"</td><td>"+originWords[i]+"</td><td>"+words[i]+"</td></tr>";
+          originTable = document.getElementById("theTable").innerHTML;
+          document.getElementById("theTable").innerHTML = originTable + "<tr><td>" + i + "</td><td>" + TWwords[i] + "</td><td>" + CHTwords[i] + "</td><td>" + ENwords[i] + "</td></tr>";
       }
+      document.getElementById("wordtable").innerHTML = TitleTable + "<tr><td>" + 0 + "</td><td>" + TWwords[0] + "</td><td>" + CHTwords[0] + "</td><td>" + ENwords[0] + "</td></tr>";
   }
   $(document).ready(function(){
     $("#theTable").slideToggle("fast");
@@ -244,25 +263,29 @@
 
   //上一個字
   function preword() {
-      var this_word = document.createElement("div");
-      wordlist.removeChild(wordlist.childNodes[0]);
-      if(words_th === 0) //若為第一個字 按下按鈕後跳到最後一個字
-          words_th = words.length - 1;
-      else
+      if(words_th === 0) { //若為第一個字 按下按鈕後跳到最後一個字
+          var th = CHTwords.length - 1;
+          document.getElementById("wordtable").innerHTML = TitleTable + "<tr><td>" + th + "</td><td>" + TWwords[th] + "</td><td>" + CHTwords[th] + "</td><td>" + ENwords[th] + "</td></tr>";
+          words_th = CHTwords.length - 1;
+      }
+      else {
+          var th = words_th - 1;
+          document.getElementById("wordtable").innerHTML = TitleTable + "<tr><td>" + th + "</td><td>" + TWwords[th] + "</td><td>" + CHTwords[th] + "</td><td>" + ENwords[th] + "</td></tr>";
           words_th = words_th - 1;
-      this_word.innerHTML = words[words_th] + "(" +originWords[words_th] + ")";
-      wordlist.appendChild(this_word);
+      }
   }
   //下一個字
   function nextword() {
-      var this_word = document.createElement("div");
-      wordlist.removeChild(wordlist.childNodes[0]);
-      if(words_th === words.length - 1) //若為最後一個字 按下按鈕後跳到第一個字
+      if(words_th === CHTwords.length - 1) { //若為最後一個字 按下按鈕後跳到第一個字
+          var th = 0;
+          document.getElementById("wordtable").innerHTML = TitleTable + "<tr><td>" + th + "</td><td>" + TWwords[th] + "</td><td>" + CHTwords[th] + "</td><td>" + ENwords[th] + "</td></tr>";
           words_th = 0;
-      else
+      }
+      else {
+          var th = words_th + 1;
+          document.getElementById("wordtable").innerHTML = TitleTable + "<tr><td>" + th + "</td><td>" + TWwords[th] + "</td><td>" + CHTwords[th] + "</td><td>" + ENwords[th] + "</td></tr>";
           words_th = words_th + 1;
-      this_word.innerHTML = words[words_th] + "(" +originWords[words_th] + ")";
-      wordlist.appendChild(this_word);
+      }
   }
 
   //創建錄音條及功能
@@ -281,6 +304,8 @@
            var theFirstChild = recordingslist.firstChild;
            var recog=document.createElement("li");
            var filename = new Date().toISOString(); //wav檔名
+           var language = document.getElementById("language").language.value;
+           var word_number;
            /*辨識相關
            $.ajax({
                url: 'recogResult',
@@ -303,11 +328,17 @@
            hf.download = filename + '.wav';
            hf.id = 'dl';
            hf.innerHTML = hf.download;
-           word.innerHTML = "錄音內容: " + words[words_th];
-           thisword.innerHTML = words[words_th];
+           word.innerHTML = "錄音內容: " + language + "," + words_th + "," + TWwords[words_th] + "," + CHTwords[words_th] + "," + ENwords[words_th];
+           if(words_th < 10){
+               word_number = "00" + words_th;
+           }
+           else if(words_th >= 10 && words_th < 100){
+               word_number = "0" + words_th;
+           }
+           thisword.innerHTML = "文本001_" + language + "_" + word_number + "_{{ rlt }}";
            download.innerHTML = "下載";
            download.onclick = function() {
-               filename = thisword.innerHTML + "_{{ rlt }}";
+               filename = thisword.innerHTML;
                hf.download = filename + '.wav';
                li.appendChild(hf);
                hf.click();
