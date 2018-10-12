@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p><input id="file" type="file"/></p>
+</body>
+<script>
+
+var txt_content;
+var txt_split = new Array();
+
+window.onload = function () {
+    document.getElementById('file').onchange = readFile;
+};
+
+function readFile() {
+    file = this.files[0];
+    var fReader = new FileReader();
+    fReader.onload = function (event) {
+        txt_content = event.target.result;
+        txt_split = txt_content.split(" ");
+        /* 測試用*/
+        for(var i = 0; i < txt_split.length ; i++){
+            console.log(txt_split[i]);
+        }
+        //抓檔名
+        var fileName = document.getElementById('file').files[0].name;
+        //console.log(fileName);
+    };
+    fReader.readAsText(file);
+}
+
+
+
+    </script>
+</html>
+
