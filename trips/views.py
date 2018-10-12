@@ -32,11 +32,17 @@ ctx['word'] = "一"
 def main(request):
     return render(request, 'main.html', {})
 
+def upload_file(request):
+    return render(request, 'upload_file.html', {})
+
 def recognizer(request):
     return render(request, 'recognizer.html', {})
 
 def recorder(request):
     return render(request, 'recorder.html', {})
+
+def self_recorder(request):
+    return render(request, 'self_recorder.html', {})
 
 def set_name(request):
     return render(request, 'set_name.html', {})
@@ -78,6 +84,17 @@ def name_post(request):
     else:
         ctx['rlt'] = ""
         return render(request, "set_name.html")
+
+def self_name_post(request):
+        if request.POST:
+            ctx['rlt'] = request.POST['q']
+            if (ctx['rlt'] == ""):
+                ctx['rlt'] = "user" + datetime.datetime.now().strftime("%f")[:-3]
+            return render(request, "self_recorder.html", ctx)
+        else:
+            ctx['rlt'] = ""
+            return render(request, "set_name.html")
+
 
 def model_form_uploadRecog(request):
     if request.method == 'POST':
