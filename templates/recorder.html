@@ -36,15 +36,15 @@
       <div class="w3-container  w3-large w3-teal w3-text-black content" >
           <p>感謝幫忙錄製以下台語內容</p>
           <p>可以挑會唸的錄製即可，錄完可至文本下方檢查或挑選檔案</p>
-          <p>提供音檔上傳麻煩請使用"錄1秒自動停止"</p>
+          <p>提供音檔上傳麻煩請使用<b class="w3-text-white">"錄1秒自動停止"</b></p>
       </div>
-      <button type ="button" onclick="location.href='../'">回首頁</button>
+      <button type ="button" class="w3-btn w3-black w3-round-xxlarge" onclick="location.href='../'">回首頁</button>
       <p class="w3-xlarge">您的暱稱為<b> {{ rlt }}</p>
       <form id="language">
         請選擇錄音語言<br>
-        <input type="radio" name="language" value="台語" checked="true"> 台語<br>
-        <input type="radio" name="language" value="華語"> 華語<br>
-        <input type="radio" name="language" value="英語"> 英語<br>
+        <input type="radio" name="language" value="TW" checked="true"> 台語<br>
+        <input type="radio" name="language" value="CH"> 華語<br>
+        <input type="radio" name="language" value="EN"> 英語<br>
       </form>
       <div class="w3-panel w3-border-top w3-border-bottom w3-border-green">
           <div class="w3-xlarge">正在錄製的字:</div>
@@ -335,7 +335,7 @@
            else if(words_th >= 10 && words_th < 100){
                word_number = "0" + words_th;
            }
-           thisword.innerHTML = "文本001_" + language + "_" + word_number + "_{{ rlt }}";
+           thisword.innerHTML = "TX001_" + language + "_" + word_number + "_{{ rlt }}";
            download.innerHTML = "下載";
            download.onclick = function() {
                filename = thisword.innerHTML;

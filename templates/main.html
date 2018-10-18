@@ -14,12 +14,12 @@
     .content{
         font-family: 'Noto Sans Kannada', sans-serif;
     }
-    
+
     recordingslist audio {}
     body {
     background-color: #dddddd;
     }
-    </style>    
+    </style>
 </head>
 <body class="w3-container">
     <br>
@@ -31,49 +31,48 @@
     <br>
     <br>
     <div class="w3-center">
-        <button type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black w3-xxlarge" onclick="move()" >台語錄音網頁 </button>
-        <button type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black w3-xxlarge" onclick="Move()" >英語辨識網頁 </button>
+        <button type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black w3-xxlarge" onclick="move()" >錄音網頁 </button>
+        <button type ="button" class="w3-button w3-light-blue w3-round-xxlarge w3-black w3-xxlarge" onclick="Move()" >辨識網頁 </button>
     </div>
-    
+
     <br>
-    <div class="w3-progress-container w3-xlarge"> 
-        <div id="myBar" class="w3-progressbar w3-green" style="width:0%"><div id="demo" class="w3-text-white">0%</div></div> 
+    <div class="w3-progress-container w3-xlarge">
+        <div id="myBar" class="w3-progressbar w3-green" style="width:0%"><div id="demo" class="w3-text-white">0%</div></div>
     </div>
 </body>
 </html>
 
-<script> 
-function move() { 
-    var elem = document.getElementById("myBar"); 
-    var width = 0; 
-    var id = setInterval(frame, 10); 
-    function frame() { 
-        if (width >= 100) { 
-            clearInterval(id); 
-        } 
-        else { 
-            width=width+2; 
+<script>
+function move() {
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+        }
+        else {
+            width=width+2;
             elem.style.width = width + '%';
             document.getElementById("demo").innerHTML = width * 1  + '%';
-        } 
-    } 
+        }
+    }
     setTimeout("location.href='recorder'",1000);
 }
-
-function Move() { 
-    var elem = document.getElementById("myBar"); 
-    var width = 0; 
-    var id = setInterval(frame, 10); 
-    function frame() { 
-        if (width >= 100) { 
-            clearInterval(id); 
-        } 
-        else { 
-            width=width+2; 
-            elem.style.width = width + '%'; 
+function Move() {
+    var elem = document.getElementById("myBar");
+    var width = 0;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (width >= 100) {
+            clearInterval(id);
+        }
+        else {
+            width=width+2;
+            elem.style.width = width + '%';
             document.getElementById("demo").innerHTML = width * 1  + '%';
-        } 
+        }
     }
     setTimeout("location.href='recognizer'",1000);
-}    
+}
 </script>
