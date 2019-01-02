@@ -311,13 +311,13 @@
                url: 'recogResult',
                type: 'GET',
                error: function(xhr) {
-                   alert('Ajax request 發生錯誤');
+                   //alert('Ajax request 發生錯誤');
                },
                success: function(response) {
                    var recogResult=response;
                    var wait="正在辨識中..."
                    $('#recogResult').text(wait);
-                   setTimeout(3000)
+                   //setTimeout(3000)
                    $('#recogResult').load('recogResult');
                }
            });
